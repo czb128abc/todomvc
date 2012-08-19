@@ -1,5 +1,5 @@
 /**
- * todomvc vanilla js
+ * todomvc abaaso
  *
  * @author Fabien Doiron <fabien.doiron@gmail.com>
  * @version prototype
