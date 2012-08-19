@@ -21,7 +21,7 @@
 		// create a namespace for the app
 		global["todo"] = App;
 		// for development - outputs debug logs
-		App.debug = true;
+			// App.debug = true;
 		// initialize the application
 		App.init();
 	});

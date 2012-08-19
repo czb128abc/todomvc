@@ -14,7 +14,7 @@
 		    list    = $("#todo-list"),
 		    footer  = $("#footer"),
 
-		    init, redraw, setRoutes;
+		    init, redraw;
 
 		/**
 		 * Initialize the application
@@ -86,10 +86,7 @@
 		return {
 			debug     : false,
 			init      : init,
-			store     : store,
-			tasks     : {},
-			completed : 0,
-			remaining : 0
+			store     : store
 		};
 	};
 
