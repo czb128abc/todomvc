@@ -1,0 +1,9 @@
+.is-hidden,
+.todo-active > .completed,
+.todo-completed > li {
+	display: none;
+}
+
+.todo-completed > .completed {
+	display: block;
+}
