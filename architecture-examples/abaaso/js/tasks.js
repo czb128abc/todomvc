@@ -56,26 +56,22 @@
 
 			// handle double click
 			label.on("dblclick", function () {
-				var value = "";
 				// set editing state
 				obj.addClass("editing");
 				// set focus to the input element
 				input.focus();
 				// cue event listener for blur and keyup
 				input.on("blur, keyup", function(event) {
+					var value = input.val().trim();
 					// make sure a "blur" or ENTER key press occurred
-					if (event.keyCode === app.keys.ENTER || event.type === "blur") {
-						// ensure the edited value is not empty
-						value = input.val().trim();
-						if (!value.isEmpty()) {
-							// update title and label to new value
-							app.store.data.set(key, { title: value });
-							label.html(value);
-							// remove "editing" class
-							obj.removeClass("editing");
-							// cleanup - unbind blur and keyup events
-							input.un("blur, keyup");
-						}
+					if ((event.keyCode === app.keys.ENTER || event.type === "blur") && !value.isEmpty()) {
+						// update title and label to new value
+						app.store.data.set(key, { title: value });
+						label.html(value);
+						// remove "editing" class
+						obj.removeClass("editing");
+						// cleanup - unbind blur and keyup events
+						input.un("blur, keyup");
 					}
 				}, "inputEvents");
 			}, "labelDblClick");
