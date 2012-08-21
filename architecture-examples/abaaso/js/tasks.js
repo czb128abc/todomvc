@@ -9,11 +9,9 @@
 
 	var Tasks = function ($) {
 		var app         = {},
-		    tasks       = {},
-		    list        = $("#todo-list"),
 		    inputToggle = $("#toggle-all"),
 
-		    init, redraw, toggleAll;
+		    init, listen, redraw, toggleAll;
 
 		/**
 		 * Initialize the list module
@@ -25,6 +23,62 @@
 			if (app.debug) $.log("Initializing todo list module");
 			// handle click event for toggle all checkbox
 			inputToggle.on("click", toggleAll, "toggleAll");
+		};
+
+		/**
+		 * Set all event listeners to the task element
+		 * 
+		 * @param  {Object} obj    Datalist element
+		 * @return {undefined}
+		 */
+		listen = function (obj) {
+			var key    = obj.data("key"),
+			    data   = app.store.data.get(key).data,
+			    toggle = obj.find(".toggle").first(),
+			    del    = obj.find(".destroy").first(),
+			    label  = obj.find("label").first(),
+			    input  = obj.find(".edit").first();
+
+			// add or remove class based on completed status
+			obj[data.completed ? "addClass" : "removeClass"]("completed");
+			// ensure checkbox is in the proper state
+			toggle.attr("checked", (data.completed ? "checked" : ""));
+
+			// toggle complete status
+			toggle.on("click", function () {
+				app.store.data.set(key, { completed: !data.completed });
+			}, "taskToggle");
+
+			// delete task
+			del.on("click", function () {
+				app.store.data.del(key);
+			}, "taskDelete");
+
+			// handle double click
+			label.on("dblclick", function () {
+				var value = "";
+				// set editing state
+				obj.addClass("editing");
+				// set focus to the input element
+				input.focus();
+				// cue event listener for blur and keyup
+				input.on("blur, keyup", function(event) {
+					// make sure a "blur" or ENTER key press occurred
+					if (event.keyCode === 13 || event.type === "blur") {
+						// ensure the edited value is not empty
+						value = input.val().trim();
+						if (!value.isEmpty()) {
+							// update title and label to new value
+							app.store.data.set(key, { title: value });
+							label.html(value);
+							// remove "editing" class
+							obj.removeClass("editing");
+							// cleanup - unbind blur and keyup events
+							input.un("blur, keyup");
+						}
+					}
+				}, "inputEvents");
+			}, "labelDblClick");
 		};
 
 		/**
@@ -55,6 +109,7 @@
 
 		return {
 			init   : init,
+			listen : listen,
 			redraw : redraw
 		};
 	};
