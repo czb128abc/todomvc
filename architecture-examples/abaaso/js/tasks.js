@@ -7,13 +7,13 @@
 (function (global) {
 	"use strict";
 
-	var Tasks = function ($, Task) {
+	var Tasks = function ($) {
 		var app         = {},
 		    tasks       = {},
 		    list        = $("#todo-list"),
 		    inputToggle = $("#toggle-all"),
 
-		    init, add, redraw, remove, toggle, toggleAll, update;
+		    init, redraw, toggleAll;
 
 		/**
 		 * Initialize the list module
@@ -25,17 +25,6 @@
 			if (app.debug) $.log("Initializing todo list module");
 			// handle click event for toggle all checkbox
 			inputToggle.on("click", toggleAll, "toggleAll");
-		};
-
-		/**
-		 * Add new task to app
-		 * 
-		 * @param  {Object} record    Record created or updated
-		 * @return {undefined}
-		 */
-		add = function (record) {
-			if (app.debug) $.log("Adding a new task based on new data store record");
-			tasks[record.key] = new Task(app, list, record);
 		};
 
 		/**
@@ -51,29 +40,6 @@
 		};
 
 		/**
-		 * Destroy task element
-		 * 
-		 * @param  {String} id    ID of record to remove
-		 * @return {undefined}
-		 */
-		remove = function (id) {
-			if (app.debug) $.log("Removing existing task based on data store record id");
-			tasks[id].destroy();
-			redraw();
-		};
-
-		/**
-		 * Toggle task state
-		 * 
-		 * @param  {Object} record    Data record to modify
-		 * @return {undefined}
-		 */
-		toggle = function (record) {
-			if (app.debug) $.log("Toggling existing task based on data store record");
-			tasks[record.key].toggle(record.data.completed);
-		}
-
-		/**
 		 * Toggle all tasks state
 		 * @return {undefined}
 		 */
@@ -87,25 +53,11 @@
 			});
 		};
 
-		/**
-		 * Determine the action to take on the record
-		 * 
-		 * @param  {Object} record    Data record to modify
-		 * @return {undefined}
-		 */
-		update = function (record) {
-			if (app.debug) $.log("Determining whether a new record was set or if one was updated");
-			if (typeof tasks[record.key] === "undefined") add(record);
-			else if (tasks[record.key].completed !== record.data.completed) toggle(record);
-			redraw();
-		};
-
 		return {
 			init   : init,
-			remove : remove,
-			update : update
+			redraw : redraw
 		};
 	};
 
-	define(["abaaso", "task"], function (abaaso, Task) { return new Tasks(global[abaaso.aliased], Task); });
+	define(["abaaso"], function (abaaso) { return new Tasks(global[abaaso.aliased]); });
 }(this));

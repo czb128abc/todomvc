@@ -10,13 +10,14 @@
 	// shortcut alias
 	require.config({
 		paths : {
-			"abaaso" : "lib/abaaso/abaaso",
-			"text"   : "lib/require/text"
+			"abaaso"          : "lib/abaaso/abaaso",
+			"abaaso.datalist" : "lib/abaaso/abaaso.datalist",
+			"text"            : "lib/require/text"
 		}
 	});
 
 	// kick start the app
-	require(["abaaso", "app"], function (abaaso, App) {
+	require(["abaaso", "app", "abaaso.datalist"], function (abaaso, App) {
 		// create a namespace for the app
 		global["todo"] = App;
 		// for development - outputs debug logs

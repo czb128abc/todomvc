@@ -8,7 +8,7 @@
 	"use strict";
 
 	var Router = function ($) {
-		var list = $("#todo-list"),
+		var list,
 		    prev,
 		    init, toggle;
 
@@ -18,6 +18,8 @@
 		 * @return {undefined}
 		 */
 		init = function () {
+			// grab list element
+			list = $("#todo-list");
 			// enable abaaso route module
 			$.route.enabled = true;
 			$.route.initial = "all";
