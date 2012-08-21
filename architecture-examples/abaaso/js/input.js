@@ -10,7 +10,6 @@
 	var Input = function ($) {
 		var app   = {},
 		    input = $("#new-todo"),
-		    ENTER = 13,
 
 		    create, init;
 
@@ -34,7 +33,7 @@
 		 */
 		create = function (event) {
 			var val = this.val().trim();
-			if (event.keyCode === ENTER && !val.isEmpty()) {
+			if (event.keyCode === app.keys.ENTER && !val.isEmpty()) {
 				if (app.debug) $.log("Enter key pressed");
 				// Add to data store
 				app.store.data.set($.genId(), { title: val, completed: false });

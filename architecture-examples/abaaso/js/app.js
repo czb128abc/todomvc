@@ -11,7 +11,6 @@
 		var store   = { id : "todo" },
 		    records = {},
 		    main    = $("#main"),
-		    list    = $("#todo-list"),
 		    footer  = $("#footer"),
 
 		    init, redraw;
@@ -89,10 +88,11 @@
 		};
 
 		return {
+			datalist : {},
 			debug    : false,
+			keys     : { ENTER : 13 },
 			init     : init,
-			store    : store,
-			datalist : {}
+			store    : store
 		};
 	};
 

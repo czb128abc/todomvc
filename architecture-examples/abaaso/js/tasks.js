@@ -64,7 +64,7 @@
 				// cue event listener for blur and keyup
 				input.on("blur, keyup", function(event) {
 					// make sure a "blur" or ENTER key press occurred
-					if (event.keyCode === 13 || event.type === "blur") {
+					if (event.keyCode === app.keys.ENTER || event.type === "blur") {
 						// ensure the edited value is not empty
 						value = input.val().trim();
 						if (!value.isEmpty()) {
