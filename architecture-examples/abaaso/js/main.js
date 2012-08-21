@@ -4,7 +4,6 @@
  * @author Fabien Doiron <fabien.doiron@gmail.com>
  * @version prototype
  */
-
 (function (global) {
 	"use strict";
 
@@ -25,5 +24,4 @@
 		// initialize the application
 		App.init();
 	});
-
 }(this));

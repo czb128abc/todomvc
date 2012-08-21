@@ -69,14 +69,17 @@
 			that.input.on("blur, keyup", function(event) {
 				// make sure a "blur" or ENTER key press occurred
 				if (event.keyCode === ENTER || event.type === "blur") {
-					value = that.input.val();
-					// update title and label to new value
-					app.store.data.set(that.id, { title: value });
-					that.label.html(value);
-					// remove "editing" class
-					that.element.removeClass("editing");
-					// cleanup - unbind blur and keyup events
-					that.input.un("blur, keyup");
+					// ensure the edited value is not empty
+					value = that.input.val().trim();
+					if (!value.isEmpty()) {
+						// update title and label to new value
+						app.store.data.set(that.id, { title: value });
+						that.label.html(value);
+						// remove "editing" class
+						that.element.removeClass("editing");
+						// cleanup - unbind blur and keyup events
+						that.input.un("blur, keyup");
+					}
 				}
 			}, "inputEvents");
 		}, "labelDblClick");
